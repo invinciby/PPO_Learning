@@ -3,7 +3,6 @@ import sys
 import torch
 
 from arguments import get_args
-from ppo import PPO
 from PPO_v1 import PPO as PPO_v1
 from network import FeedForwardNN
 from eval_policy import eval_policy

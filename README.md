@@ -18,6 +18,26 @@ pip install -r requirements.txt
 
 ![](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*AX2vLguiKvxn-YIntIx18w.png)
 
+
+- `Learning_READ`文件夹中包含了学习PPO算法的内容，以及对改代码的详细介绍，如果希望通过改项目学习PPO算法，可以先去此文件夹中学习。
+- `PPO_code`文件夹中包含了PPO算法的代码实现，如果希望直接使用PPO算法，可以直接使用此文件夹中的代码。
+
+## Run the Code
+
+如果希望运行此代码
+
+1. 需要在`arguments.py`中修改相关参数
+2. 运行`main.py`文件即可
+
+> 需要注意的是，当前该代码仅支持Pendulum-v1游戏，如果希望运行其他游戏，需要修改代码。
+
+
+
+
+
+## 算法流程
+
+
 ```python 
 
 1. Input: 策略参数，初始值函数参数  
@@ -31,7 +51,9 @@ pip install -r requirements.txt
 
 ```
 
-# 整体流程
+
+
+### 代码整体流程框架
 
 
 ```mermaid
