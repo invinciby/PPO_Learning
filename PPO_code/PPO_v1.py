@@ -14,22 +14,35 @@ import time
 class RunningStat:
     """用于在线计算均值和标准差"""
     def __init__(self, shape):
+        # 初始化计数器n为0
         self.n = 0
+        # 初始化均值mean为shape大小的零数组
         self.mean = np.zeros(shape)
+        # 初始化方差S为shape大小的零数组
         self.S = np.zeros(shape)
+        # 初始化标准差std为shape大小的零数组
         self.std = np.zeros(shape)
+        # 初始化方差var为shape大小的零数组
         self.var = np.zeros(shape)
 
     def update(self, x):
+        # 将输入x转换为数组
         x = np.array(x)
+        # 计数器n加1
         self.n += 1
+        # 如果计数器n为1，则将x赋值给均值mean
         if self.n == 1:
             self.mean = x
         else:
+            # 保存旧的均值old_mean
             old_mean = self.mean.copy()
+            # 更新均值mean
             self.mean = old_mean + (x - old_mean) / self.n
+            # 更新方差S
             self.S = self.S + (x - old_mean) * (x - self.mean)
+            # 如果计数器n大于1，则计算方差var，否则计算均值的平方
             self.var = self.S / (self.n - 1) if self.n > 1 else np.square(self.mean)
+            # 计算标准差std
             self.std = np.sqrt(self.var)
 
 class PPO:
