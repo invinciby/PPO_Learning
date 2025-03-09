@@ -47,6 +47,9 @@ class RunningStat:
 
 class PPO:
     def __init__(self, policy_class, env, **hyperparameters):
+        """
+        初始化策略网络和值函数网络, 并设置超参数, 如学习率、折扣因子、GAE参数、裁剪参数等。
+        """
         assert(type(env.observation_space) == gym.spaces.Box)
         assert(type(env.action_space) == gym.spaces.Box)
         
@@ -89,7 +92,7 @@ class PPO:
         }
         
     def _init_hyperparameters(self, hyperparameters):
-        # 默认超参数
+        # 设置默认超参数
         self.timesteps_per_batch = 4096
         self.max_timesteps_per_episode = 1000
         self.gamma = 0.99
@@ -105,8 +108,8 @@ class PPO:
         self.render = True
         self.render_every_i = 10
         self.save_freq = 5
-        self.normalize_observations = False  # 默认关闭，避免初始问题
-        self.normalize_rewards = False       # 默认关闭，避免初始问题
+        self.normalize_observations = False  
+        self.normalize_rewards = False       
         self.lr_schedule = 'constant'
         self.target_kl = 0.01
         self.early_stopping = True
