@@ -50,6 +50,7 @@ class PPO:
         """
         初始化策略网络和值函数网络, 并设置超参数, 如学习率、折扣因子、GAE参数、裁剪参数等。
         """
+        
         assert(type(env.observation_space) == gym.spaces.Box)
         assert(type(env.action_space) == gym.spaces.Box)
         
@@ -177,27 +178,27 @@ class PPO:
             
     def rollout(self):
         """收集训练数据"""
-        batch_obs = []
-        batch_acts = []
-        batch_log_probs = []
-        batch_rews = []
-        batch_rtgs = []
-        batch_lens = []
+        batch_obs = []  # 存储每个时间步的观察
+        batch_acts = []  # 存储每个时间步的动作
+        batch_log_probs = []  # 存储每个时间步的动作对数概率
+        batch_rews = []  # 存储每个episode的奖励
+        batch_rtgs = []  # 存储每个episode的奖励到未来（rewards-to-go）
+        batch_lens = []  # 存储每个episode的长度
         
         t = 0  # 计数器，跟踪已收集的时间步
         
         while t < self.timesteps_per_batch:
             # 单个episode的数据
-            ep_rews = []
+            ep_rews = []  # 存储当前episode的奖励
             
             # 重置环境
             obs, _ = self.env.reset()
             if self.normalize_observations:
-                norm_obs = self.normalize_observation(obs)
+                norm_obs = self.normalize_observation(obs)  # 标准化观察
             else:
                 norm_obs = obs
                 
-            done = False
+            done = False  # 标记episode是否结束
             
             for ep_t in range(self.max_timesteps_per_episode):
                 # 可选渲染
@@ -218,7 +219,7 @@ class PPO:
                 
                 # 标准化奖励（如果启用）
                 if self.normalize_rewards:
-                    norm_rew = self.normalize_reward(rew)
+                    norm_rew = self.normalize_reward(rew)  # 标准化奖励
                 else:
                     norm_rew = rew
                 
@@ -230,7 +231,7 @@ class PPO:
                 # 更新观察
                 obs = next_obs
                 if self.normalize_observations:
-                    norm_obs = self.normalize_observation(obs)
+                    norm_obs = self.normalize_observation(obs)  # 标准化观察
                 else:
                     norm_obs = obs
                 
@@ -368,8 +369,8 @@ class PPO:
             
             # 保存模型
             if i_so_far % self.save_freq == 0:
-                torch.save(self.actor.state_dict(), f'./ppo_actor_{i_so_far}.pth')
-                torch.save(self.critic.state_dict(), f'./ppo_critic_{i_so_far}.pth')
+                torch.save(self.actor.state_dict(), f'./ppo_actor_V_{i_so_far}.pth')
+                torch.save(self.critic.state_dict(), f'./ppo_critic_V_{i_so_far}.pth')
     
     def get_action(self, obs):
         """根据观察获取动作"""

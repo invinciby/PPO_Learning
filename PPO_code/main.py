@@ -10,7 +10,11 @@ from eval_policy import eval_policy
 
 def train(env, hyperparameters, actor_model, critic_model):
     print(f"Training", flush=True)
+  
     
+    print(type(env.observation_space))
+    print(type(env.action_space))
+    print(gym.spaces.Box)
     model = PPO_v1(policy_class=FeedForwardNN, env=env, **hyperparameters)
     
     if actor_model !='' and critic_model != '':
@@ -52,7 +56,7 @@ def main(args):
         
         # 折扣和优势估计
         'gamma': 0.99,                        # 折扣因子
-        'gae_lambda': 0.95,                   # GAE lambda参数
+        'gae_lambda': 0.98,                   # GAE lambda参数
         
         # 优化参数
         'n_updates_per_iteration': 10,        # 每批次的更新次数
