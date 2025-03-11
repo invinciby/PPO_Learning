@@ -11,7 +11,6 @@ from eval_policy import eval_policy
 def train(env, hyperparameters, actor_model, critic_model):
     print(f"Training", flush=True)
     
-    # model = PPO(policy_class=FeedForwardNN, env=env, **hyperparameters)
     model = PPO_v1(policy_class=FeedForwardNN, env=env, **hyperparameters)
     
     if actor_model !='' and critic_model != '':
@@ -82,7 +81,6 @@ def main(args):
     
     env = gym.make(args.env, render_mode='human' if args.mode == 'test' else 'rgb_array')
 
-	# Train or test, depending on the mode specified
     if args.mode == 'train':
         train(env=env, hyperparameters=hyperparameters, actor_model=args.actor_model, critic_model=args.critic_model)
     else:
